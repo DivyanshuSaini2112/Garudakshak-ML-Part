@@ -1,69 +1,102 @@
 # Garudakshak Anti-Drone Detection System
 
-![image](https://github.com/user-attachments/assets/002fa321-eb6a-4393-80e9-889c18d9a161)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/002fa321-eb6a-4393-80e9-889c18d9a161" alt="Garudakshak Logo" width="600">
+  
+  *Advanced drone detection and neutralization system*
+  
+  [![Python](https://img.shields.io/badge/Python-3.7%2B-blue)](https://www.python.org/)
+  [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+  [![GitHub stars](https://img.shields.io/github/stars/DivyanshuSaini2112/Garudakshak-ML-Part?style=social)](https://github.com/DivyanshuSaini2112/Garudakshak-ML-Part/stargazers)
+</div>
 
+## 📋 Overview
 
-## Overview
+Garudakshak is a state-of-the-art anti-drone detection and tracking system designed to identify, monitor, and provide real-time analytics for unauthorized drone activity. The system leverages advanced computer vision techniques, depth estimation algorithms, and GPS tracking to create a comprehensive drone detection and monitoring solution.
 
-Garudakshak is an advanced anti-drone detection and tracking system designed to identify, monitor, and provide real-time analytics for unauthorized drone activity. The system combines computer vision, depth estimation, and GPS tracking to create a comprehensive drone detection solution.
+## ✨ Key Features
 
-## Features
+<table>
+  <tr>
+    <td>
+      <ul>
+        <li>🎯 <b>Real-time drone detection and tracking</b></li>
+        <li>🔒 <b>Target locking mechanism</b> with visual indicators</li>
+        <li>📏 <b>Depth estimation</b> using MiDaS deep learning model</li>
+        <li>📍 <b>GPS position triangulation</b> for target location</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>🔄 <b>Persistent tracking</b> across video frames</li>
+        <li>📊 <b>Comprehensive analytics dashboard</b></li>
+        <li>⚡ <b>High-performance processing</b> optimized for real-time operation</li>
+        <li>📱 <b>Multi-platform support</b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-- **Real-time drone detection and tracking**
-- **Target locking mechanism** with visual indicators
-- **Depth estimation** using MiDaS deep learning model
-- **GPS position triangulation** for target location
-- **Persistent tracking** across video frames
-- **Comprehensive analytics dashboard** with:
-  - GPS tracking path visualization
-  - Target distance monitoring
-  - Speed/velocity analysis
-  - Lock status tracking
-- **High-performance processing** optimized for real-time operation
+## 📊 Analytics Dashboard
 
-## System Requirements
+The system includes a powerful analytics dashboard providing:
+
+- 🗺️ GPS tracking path visualization
+- 📏 Target distance monitoring
+- 🚀 Speed/velocity analysis
+- 🔒 Lock status tracking
+- 📈 Statistical data analysis
+
+## 🖥️ System Requirements
 
 - Python 3.7+
 - CUDA-capable GPU (recommended)
 - Webcam or video input device
 - Required Python packages:
-  - OpenCV
-  - PyTorch
-  - torchvision
-  - NumPy
-  - Matplotlib
-  - Geopy
-  - Pillow
 
-## Installation
+```
+opencv-python>=4.5.0
+torch>=1.7.0
+torchvision>=0.8.0
+numpy>=1.19.0
+matplotlib>=3.3.0
+geopy>=2.0.0
+pillow>=8.0.0
+```
 
-1. Clone the repository:
-   ```
+## 🚀 Installation
+
+1. **Clone the repository:**
+   ```bash
    git clone https://github.com/DivyanshuSaini2112/Garudakshak-ML-Part.git
    cd Garudakshak-ML-Part
    ```
 
-2. Install required packages:
-   ```
+2. **Install required packages:**
+   ```bash
    pip install -r requirements.txt
    ```
 
-3. Download required model weights:
-   ```
+3. **Download required model weights:**
+   ```bash
    # The system will automatically download MiDaS weights on first run
    ```
 
-## Usage
+## 🎮 Usage
 
 Run the main detection script:
-```
+```bash
 python Detect.py
 ```
 
 ### Controls
 - Press 'q' to exit the detection system and view the analytics dashboard
 
-## System Architecture
+## 🏗️ System Architecture
+
+<div align="center">
+  <img src="https://via.placeholder.com/800x400?text=Garudakshak+System+Architecture" alt="System Architecture" width="700">
+</div>
 
 The Garudakshak system consists of several key components:
 
@@ -73,26 +106,18 @@ The Garudakshak system consists of several key components:
 4. **Tracking System**: Maintains persistent identification of targets across frames
 5. **Analytics Dashboard**: Provides comprehensive visualization of tracking data
 
-## Configuration
+## ⚙️ Configuration
 
 The system includes configurable parameters in the code:
 
-- `CONFIDENCE_THRESHOLD`: Minimum confidence for detection (default: 0.35)
-- `TARGET_LOCKED_THRESHOLD`: Frames required for target lock (default: 5)
-- `GPS_UPDATE_INTERVAL`: Seconds between GPS position updates (default: 1.0)
-- `DISPLAY_WIDTH/HEIGHT`: Resolution for processing and display
+| Parameter | Description | Default Value |
+|-----------|-------------|---------------|
+| `CONFIDENCE_THRESHOLD` | Minimum confidence for detection | 0.35 |
+| `TARGET_LOCKED_THRESHOLD` | Frames required for target lock | 5 |
+| `GPS_UPDATE_INTERVAL` | Seconds between GPS position updates | 1.0 |
+| `DISPLAY_WIDTH/HEIGHT` | Resolution for processing and display | 1280x720 |
 
-## Dashboard
-
-The analytics dashboard provides comprehensive visualization of:
-
-- Target GPS tracking path
-- Real-time distance measurements
-- Target velocity analysis
-- Lock status history
-- Summary statistics
-
-## Documentation
+## 📚 Documentation
 
 For more detailed information, please refer to the following documentation:
 
@@ -101,7 +126,7 @@ For more detailed information, please refer to the following documentation:
 - [Legal Guidelines](docs/Garudakshak_legal_guidelines.docx)
 - [Bill of Materials](docs/Bill_Of_Material_for_Drone_Neutralization.pdf)
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 Garudakshak-ML-Part/
@@ -116,16 +141,30 @@ Garudakshak-ML-Part/
 └── README.md               # This file
 ```
 
-## Contributing
+## 🤝 Contributing
 
-Contributions to the Garudakshak project are welcome. Please feel free to submit a Pull Request.
+Contributions to the Garudakshak project are welcome! Please feel free to submit a Pull Request.
 
-## License
+Guidelines for contributing:
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📄 License
 
-## Acknowledgments
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
 
 - Intel for the MiDaS depth estimation model
 - OpenCV community for computer vision tools
 - PyTorch team for the deep learning framework
+
+---
+
+<div align="center">
+  <p>Developed by <a href="https://github.com/DivyanshuSaini2112">Divyanshu Saini</a> and contributors</p>
+  <p>© 2023-2025 Garudakshak Project</p>
+</div>
