@@ -18,6 +18,7 @@ import datetime
 import matplotlib.dates as mdates
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 
+
 # Optimize for performance
 cudnn.benchmark = True
 cudnn.deterministic = False

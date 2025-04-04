@@ -1,0 +1,174 @@
+/* styles.css */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Switch toggle styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #374151;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #3B82F6;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #3B82F6;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Map display enhancements */
+#detection-map {
+  background-color: #1F2937;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at center, transparent 0%, transparent 20%, rgba(59, 130, 246, 0.1) 20%, rgba(59, 130, 246, 0.1) 21%, transparent 21%, transparent 100%),
+    linear-gradient(0deg, rgba(55, 65, 81, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(55, 65, 81, 0.3) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px, 20px 20px;
+  background-position: center center;
+}
+
+/* Distance rings */
+.distance-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px dashed rgba(59, 130, 246, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ring-label {
+  position: absolute;
+  font-size: 10px;
+  color: rgba(59, 130, 246, 0.6);
+  pointer-events: none;
+}
+
+/* Drone marker pulse effect */
+.pulse-ring {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 0, 0, 0.7);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  top: -15px;
+  left: -15px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Home marker styling */
+#home-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+/* Drone marker styling */
+#drone-marker {
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+/* Event log styling */
+.log-entry {
+  padding: 4px 0;
+  border-bottom: 1px solid #2D3748;
+}
+
+.log-entry.alert {
+  color: #FC8181;
+}
+
+.log-entry.info {
+  color: #63B3ED;
+}
+
+.log-entry.success {
+  color: #68D391;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Make canvas responsive */
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

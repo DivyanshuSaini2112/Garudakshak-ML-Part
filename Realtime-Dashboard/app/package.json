@@ -1,0 +1,33 @@
+{
+  "name": "drone-detection-dashboard",
+  "version": "1.0.0",
+  "description": "A real-time dashboard for drone detection and tracking",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^35.0.3",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.example.drone-detection-dashboard",
+    "productName": "Drone Detection Dashboard",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "dependencies": {
+    "ws": "^8.18.1"
+  }
+}

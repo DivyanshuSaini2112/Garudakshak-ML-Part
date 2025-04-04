@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drone Detection Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white">
+  <div class="container mx-auto px-4 py-6">
+    <!-- Header -->
+    <header class="flex justify-between items-center mb-6">
+      <div class="flex items-center">
+        <i class="fas fa-drone text-blue-500 text-4xl mr-3"></i>
+        <h1 class="text-2xl font-bold">Drone Detection Dashboard</h1>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="connection-status flex items-center">
+          <span id="connection-indicator" class="h-3 w-3 rounded-full bg-red-500 mr-2"></span>
+          <span id="connection-text">Disconnected</span>
+        </div>
+        
+        <div class="flex items-center">
+          <span class="mr-2">Mock Data</span>
+          <label class="switch">
+            <input type="checkbox" id="data-toggle">
+            <span class="slider round"></span>
+          </label>
+          <span class="ml-2">Live Data</span>
+        </div>
+        
+        <button id="settings-btn" class="bg-gray-700 hover:bg-gray-600 p-2 rounded">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Alert Bar -->
+    <div id="alert-bar" class="hidden bg-red-600 text-white p-3 rounded mb-6 flex justify-between items-center">
+      <div class="flex items-center">
+        <i class="fas fa-exclamation-triangle mr-2"></i>
+        <span id="alert-message">Alert: Drone detected in restricted area!</span>
+      </div>
+      <button id="dismiss-alert" class="text-white hover:text-gray-300">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="grid grid-cols-12 gap-6">
+      <!-- Main Detection Card -->
+      <div class="col-span-8 bg-gray-800 rounded-lg shadow-lg p-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Drone Detection</h2>
+          <div class="text-sm text-gray-400" id="last-updated">Last updated: Never</div>
+        </div>
+        
+        <div class="relative h-72 border border-gray-700 rounded-lg overflow-hidden" id="map-container">
+          <!-- Map Background with Grid Lines -->
+          <div id="detection-map" class="w-full h-full">
+            <!-- Grid Layout -->
+            <div class="map-grid"></div>
+            
+            <!-- North Indicator -->
+            <div class="absolute top-2 right-2 flex flex-col items-center">
+              <i class="fas fa-arrow-up text-blue-400"></i>
+              <span class="text-xs text-blue-400">N</span>
+            </div>
+            
+            <!-- Distance Rings -->
+            <div class="distance-ring" style="width: 40%; height: 40%;" data-distance="50m"></div>
+            <div class="distance-ring" style="width: 70%; height: 70%;" data-distance="100m"></div>
+            <div class="distance-ring" style="width: 100%; height: 100%;" data-distance="150m"></div>
+            
+            <!-- Ring Labels -->
+            <div class="ring-label" style="top: 50%; left: 70%;">50m</div>
+            <div class="ring-label" style="top: 50%; left: 85%;">100m</div>
+            <div class="ring-label" style="top: 50%; right: 0;">150m</div>
+          </div>
+          
+          <!-- Markers -->
+          <div id="drone-marker" class="absolute hidden">
+            <div class="pulse-ring"></div>
+            <i class="fas fa-drone text-red-500 text-xl"></i>
+          </div>
+          <div id="home-marker" class="absolute">
+            <i class="fas fa-home text-blue-500 text-xl"></i>
+            <span class="text-xs text-blue-400 mt-1">Base</span>
+          </div>
+          
+          <!-- Coordinates -->
+          <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 p-2 rounded text-sm">
+            <div id="coordinates">GPS: --° N, --° E</div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-3 gap-4 mt-4">
+          <div class="bg-gray-700 p-3 rounded">
+            <div class="text-gray-400 text-sm">Distance</div>
+            <div class="text-xl font-bold" id="distance-value">-- m</div>
+          </div>
+          <div class="bg-gray-700 p-3 rounded">
+            <div class="text-gray-400 text-sm">Speed</div>
+            <div class="text-xl font-bold" id="speed-value">-- km/h</div>
+          </div>
+          <div class="bg-gray-700 p-3 rounded">
+            <div class="text-gray-400 text-sm">Tracking Time</div>
+            <div class="text-xl font-bold" id="time-value">-- s</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Panel -->
+      <div class="col-span-4 bg-gray-800 rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-semibold mb-4">Status & Details</h2>
+        
+        <div class="mb-4">
+          <div class="text-gray-400 mb-1">Detection Status</div>
+          <div class="text-lg font-bold" id="detection-status">No Drone Detected</div>
+        </div>
+        
+        <div class="mb-4">
+          <div class="text-gray-400 mb-1">Drone Details</div>
+          <div class="bg-gray-700 p-3 rounded">
+            <div id="stats-info" class="text-sm">Waiting for data...</div>
+          </div>
+        </div>
+        
+        <div class="mb-4">
+          <div class="text-gray-400 mb-1">Movement</div>
+          <div class="text-lg font-bold" id="movement-status">--</div>
+        </div>
+        
+        <div>
+          <div class="text-gray-400 mb-1">Processing Times (ms)</div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="bg-gray-700 p-2 rounded text-center">
+              <div class="text-xs text-gray-400">Pre</div>
+              <div id="preprocess-time">--</div>
+            </div>
+            <div class="bg-gray-700 p-2 rounded text-center">
+              <div class="text-xs text-gray-400">Inf</div>
+              <div id="inference-time">--</div>
+            </div>
+            <div class="bg-gray-700 p-2 rounded text-center">
+              <div class="text-xs text-gray-400">Post</div>
+              <div id="postprocess-time">--</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Chart -->
+      <div class="col-span-8 bg-gray-800 rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-semibold mb-2">Performance History</h2>
+        <div class="h-48">
+          <canvas id="history-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Log Panel -->
+      <div class="col-span-4 bg-gray-800 rounded-lg shadow-lg p-4">
+        <div class="flex justify-between items-center mb-2">
+          <h2 class="text-xl font-semibold">Event Log</h2>
+          <button id="clear-log" class="text-sm text-gray-400 hover:text-white">Clear</button>
+        </div>
+        <div id="event-log" class="h-48 overflow-y-auto bg-gray-900 p-3 rounded text-sm font-mono">
+          <div class="log-entry">System initialized and ready</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
