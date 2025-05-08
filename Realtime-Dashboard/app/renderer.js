@@ -496,5 +496,101 @@ function addLogEntry(message, type = 'info') {
   }
 }
 
+// Video feed variables
+let videoSocket = null;
+let videoCanvas = document.getElementById('video-canvas');
+let videoCtx = videoCanvas.getContext('2d');
+let videoContainer = document.getElementById('video-container');
+let videoStatus = document.getElementById('video-status');
+let videoToggle = document.getElementById('video-toggle');
+let isVideoEnabled = false;
+
+// Initialize video canvas size
+function initVideoCanvas() {
+  videoCanvas.width = videoContainer.clientWidth;
+  videoCanvas.height = videoContainer.clientHeight;
+}
+
+// Connect to video WebSocket
+function connectVideoWebSocket() {
+  if (videoSocket) {
+    videoSocket.close();
+  }
+
+  videoSocket = new WebSocket('ws://localhost:8000/video');
+  
+  videoSocket.onopen = () => {
+    videoStatus.textContent = 'Status: Connected';
+    videoStatus.className = 'text-sm text-green-400';
+  };
+  
+  videoSocket.onmessage = (event) => {
+    if (event.data instanceof Blob) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          videoCtx.drawImage(img, 0, 0, videoCanvas.width, videoCanvas.height);
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(event.data);
+    }
+  };
+  
+  videoSocket.onerror = (error) => {
+    console.error('Video WebSocket error:', error);
+    videoStatus.textContent = 'Status: Error';
+    videoStatus.className = 'text-sm text-red-400';
+  };
+  
+  videoSocket.onclose = () => {
+    console.log('Video WebSocket connection closed');
+    videoStatus.textContent = 'Status: Disconnected';
+    videoStatus.className = 'text-sm text-gray-400';
+    
+    if (isVideoEnabled) {
+      setTimeout(connectVideoWebSocket, 5000);
+    }
+  };
+}
+
+// Toggle video feed
+function toggleVideoFeed() {
+  isVideoEnabled = videoToggle.checked;
+  
+  if (isVideoEnabled) {
+    videoContainer.classList.remove('hidden');
+    initVideoCanvas();
+    connectVideoWebSocket();
+  } else {
+    videoContainer.classList.add('hidden');
+    if (videoSocket) {
+      videoSocket.close();
+      videoSocket = null;
+    }
+  }
+}
+
+// Add video toggle event listener
+videoToggle.addEventListener('change', toggleVideoFeed);
+
+// Handle window resize
+window.addEventListener('resize', () => {
+  if (isVideoEnabled) {
+    initVideoCanvas();
+  }
+  // Properly resize the map
+  setMapHomePosition();
+  
+  // Force chart to properly resize
+  historyChart.resize();
+  
+  // If we have drone position data, update it
+  if (!droneMarker.classList.contains('hidden')) {
+    updateDronePosition(lastDroneData);
+  }
+});
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', init);

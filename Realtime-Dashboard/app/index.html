@@ -33,6 +33,14 @@
           </label>
           <span class="ml-2">Live Data</span>
         </div>
+
+        <div class="flex items-center">
+          <span class="mr-2">Video Feed</span>
+          <label class="switch">
+            <input type="checkbox" id="video-toggle">
+            <span class="slider round"></span>
+          </label>
+        </div>
         
         <button id="settings-btn" class="bg-gray-700 hover:bg-gray-600 p-2 rounded">
           <i class="fas fa-cog"></i>
@@ -53,6 +61,17 @@
 
     <!-- Main Dashboard -->
     <div class="grid grid-cols-12 gap-6">
+      <!-- Video Feed -->
+      <div id="video-container" class="col-span-8 bg-gray-800 rounded-lg shadow-lg p-4 hidden">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Live Video Feed</h2>
+          <div class="text-sm text-gray-400" id="video-status">Status: Disconnected</div>
+        </div>
+        <div class="relative h-96 bg-black rounded-lg overflow-hidden">
+          <canvas id="video-canvas" class="w-full h-full"></canvas>
+        </div>
+      </div>
+
       <!-- Main Detection Card -->
       <div class="col-span-8 bg-gray-800 rounded-lg shadow-lg p-4">
         <div class="flex justify-between items-center mb-4">
